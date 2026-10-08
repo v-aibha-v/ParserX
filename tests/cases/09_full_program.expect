@@ -1,0 +1,8 @@
+# Test 9
+# Accepted by all three; all statement types work together
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [SL [S x = 1 ;] [S if ( [C x >= 1] ) [S { [SL [S y = [T x * 2] ;] [S z = [T y / 2] ;]] }] else [S z = 0 ;]]]
+TREE LALR: [SL [S x = 1 ;] [S if ( [C x >= 1] ) [S { [SL [S y = [T x * 2] ;] [S z = [T y / 2] ;]] }] else [S z = 0 ;]]]
+TREE CLR: [SL [S x = 1 ;] [S if ( [C x >= 1] ) [S { [SL [S y = [T x * 2] ;] [S z = [T y / 2] ;]] }] else [S z = 0 ;]]]

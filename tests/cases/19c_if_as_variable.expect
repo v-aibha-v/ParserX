@@ -1,0 +1,5 @@
+# Test 19
+# Rejected at = as if is a keyword
+RESULT SLR REJECTED token== line=1 col=4 
+RESULT LALR REJECTED token== line=1 col=4 
+RESULT CLR REJECTED token== line=1 col=4 

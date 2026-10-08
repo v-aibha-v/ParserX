@@ -1,0 +1,14 @@
+# Test 22 Comparison
+# SLR 37 states and LALR 37 states; CLR 111 states
+# Shift reduce conflict on else in all; every conflict is solved by shift
+TABLE SLR states=37 
+TABLE LALR states=37 
+TABLE CLR states=111 
+CONFLICT SLR shift/reduce on 'else'
+CONFLICT LALR shift/reduce on 'else'
+CONFLICT CLR shift/reduce on 'else'
+re:^TABLE SLR .* rr=0$
+re:^TABLE LALR .* rr=0$
+re:^TABLE CLR .* rr=0$
+re:^CONFLICT .*resolved by SHIFT
+!reduce/reduce on

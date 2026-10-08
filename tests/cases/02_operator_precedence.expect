@@ -1,0 +1,8 @@
+# Test 2
+# Accepted by all three; b * c is reduced before the addition
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [S y = [E a + [T b * c]] ;]
+TREE LALR: [S y = [E a + [T b * c]] ;]
+TREE CLR: [S y = [E a + [T b * c]] ;]

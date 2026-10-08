@@ -1,0 +1,5 @@
+# Test 12 (edge)
+# 5000 levels of nesting accepted with no crash; the parser uses its own stack
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED

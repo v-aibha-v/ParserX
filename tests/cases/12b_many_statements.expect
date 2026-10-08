@@ -1,0 +1,5 @@
+# Test 12 (edge)
+# x = 1 ; repeated 10000 times is accepted by all three
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED

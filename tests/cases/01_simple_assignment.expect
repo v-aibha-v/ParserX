@@ -1,0 +1,8 @@
+# Test 1 Simple assignment
+# Accepted by SLR, LALR and CLR; all three make the same moves
+RESULT SLR ACCEPTED steps=11
+RESULT LALR ACCEPTED steps=11
+RESULT CLR ACCEPTED steps=11
+TREE SLR: [S x = 5 ;]
+TREE LALR: [S x = 5 ;]
+TREE CLR: [S x = 5 ;]

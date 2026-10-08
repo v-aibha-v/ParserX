@@ -1,0 +1,5 @@
+# Test 20
+# Rejected at the second <; chained comparison is not allowed
+RESULT SLR REJECTED token=relop line=1 col=12 
+RESULT LALR REJECTED token=relop line=1 col=12 
+RESULT CLR REJECTED token=relop line=1 col=12 

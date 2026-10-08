@@ -1,0 +1,12 @@
+# Test 7 Dangling else (edge)
+# Accepted by all three; the else joins the inner if
+# Shift reduce conflict solved by shift
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [S if ( [C a > b] ) [S if ( [C c < d] ) [S x = 1 ;] else [S x = 2 ;]]]
+TREE LALR: [S if ( [C a > b] ) [S if ( [C c < d] ) [S x = 1 ;] else [S x = 2 ;]]]
+TREE CLR: [S if ( [C a > b] ) [S if ( [C c < d] ) [S x = 1 ;] else [S x = 2 ;]]]
+CONFLICT SLR shift/reduce on 'else'
+CONFLICT LALR shift/reduce on 'else'
+CONFLICT CLR shift/reduce on 'else'

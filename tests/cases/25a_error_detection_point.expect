@@ -1,0 +1,9 @@
+# Test 25 Comparison
+# All three reject at ;
+# SLR and LALR reduce 3 times first; CLR detects it at once
+RESULT SLR REJECTED token=; line=1 col=13 step=
+RESULT LALR REJECTED token=; line=1 col=13 step=
+RESULT CLR REJECTED token=; line=1 col=13 step=
+re:^RESULT SLR REJECTED .* reduces=3 
+re:^RESULT LALR REJECTED .* reduces=3 
+re:^RESULT CLR REJECTED .* reduces=0 

@@ -1,0 +1,6 @@
+# Test 25
+# CLR expects ; + - * or /
+# SLR and LALR also list ) and relop
+re:^RESULT CLR REJECTED .* expected=\* \+ - / ;$
+re:^RESULT SLR REJECTED .* expected=\) \* \+ - / ; relop$
+re:^RESULT LALR REJECTED .* expected=\) \* \+ - / ; relop$

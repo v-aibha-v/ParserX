@@ -1,0 +1,9 @@
+# Test 10
+# Accepted by all three; each operator becomes one relop token
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+relop   <=
+relop   >=
+relop   !=
+Tokens: 31

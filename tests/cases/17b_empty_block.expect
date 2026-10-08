@@ -1,0 +1,5 @@
+# Test 17
+# Rejected at } as the block is empty
+RESULT SLR REJECTED token=} line=1 col=3 
+RESULT LALR REJECTED token=} line=1 col=3 
+RESULT CLR REJECTED token=} line=1 col=3 

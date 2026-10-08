@@ -1,0 +1,11 @@
+# Main language grammar of the project (loaded by the parser at runtime).
+# Supports:  A -> B C      one production per line
+#            A -> B | C    several alternatives on one line
+#            A -> eps      epsilon productions
+P  -> SL
+SL -> SL S | S
+S  -> id = E ; | if ( C ) S | if ( C ) S else S | { SL }
+C  -> E relop E
+E  -> E + T | E - T | T
+T  -> T * F | T / F | F
+F  -> ( E ) | id | num

@@ -1,0 +1,7 @@
+# Test 18
+# Read as 2 and x, then rejected at 2
+num     2
+id      x
+RESULT SLR REJECTED token=num line=1 col=1 
+RESULT LALR REJECTED token=num line=1 col=1 
+RESULT CLR REJECTED token=num line=1 col=1 

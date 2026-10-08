@@ -1,0 +1,5 @@
+# Demo grammar: LALR merges a lookahead in a way CLR keeps apart,
+# so CLR has more states and can be conflict-free where LALR conflicts.
+S -> a A d | b B d | a B e | b A e
+A -> c
+B -> c

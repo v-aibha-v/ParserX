@@ -1,0 +1,8 @@
+# Build output
+*.exe
+*.o
+parser
+parserx
+
+# Test output
+tests/output/

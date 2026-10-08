@@ -1,0 +1,5 @@
+# Test 19
+# Rejected at ) as the condition is empty
+RESULT SLR REJECTED token=) line=1 col=6 
+RESULT LALR REJECTED token=) line=1 col=6 
+RESULT CLR REJECTED token=) line=1 col=6 

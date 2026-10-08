@@ -1,0 +1,5 @@
+# Test 13
+# Rejected at ; as the value is missing
+RESULT SLR REJECTED token=; line=1 col=5 
+RESULT LALR REJECTED token=; line=1 col=5 
+RESULT CLR REJECTED token=; line=1 col=5 

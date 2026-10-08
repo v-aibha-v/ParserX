@@ -1,0 +1,5 @@
+# Test 15
+# Rejected at * after another operator
+RESULT SLR REJECTED token=* line=1 col=9 
+RESULT LALR REJECTED token=* line=1 col=9 
+RESULT CLR REJECTED token=* line=1 col=9 

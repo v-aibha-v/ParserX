@@ -1,0 +1,4 @@
+# Small grammar exercising epsilon productions and FIRST/FOLLOW propagation.
+S -> A B
+A -> a A | eps
+B -> b B | eps

@@ -1,0 +1,8 @@
+# Test 11 (edge)
+# Accepted with long names as one token
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+id      count1
+num     12345
+id      rate2

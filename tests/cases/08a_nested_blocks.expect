@@ -1,0 +1,8 @@
+# Test 8
+# Accepted by all three
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [S { [SL [S x = 1 ;] [S { [S y = 2 ;] }]] }]
+TREE LALR: [S { [SL [S x = 1 ;] [S { [S y = 2 ;] }]] }]
+TREE CLR: [S { [SL [S x = 1 ;] [S { [S y = 2 ;] }]] }]

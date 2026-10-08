@@ -1,0 +1,5 @@
+# Test 19
+# Rejected at a as ( is missing
+RESULT SLR REJECTED token=id line=1 col=4 
+RESULT LALR REJECTED token=id line=1 col=4 
+RESULT CLR REJECTED token=id line=1 col=4 

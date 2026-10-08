@@ -1,0 +1,8 @@
+# Test 3
+# Accepted by all three; a - b is reduced first
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [S z = [E [E a - b] - c] ;]
+TREE LALR: [S z = [E [E a - b] - c] ;]
+TREE CLR: [S z = [E [E a - b] - c] ;]

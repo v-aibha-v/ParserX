@@ -1,0 +1,9 @@
+# Test 11 (edge)
+# Code with tabs and new lines is accepted with the same tokens as  x = a + b ;
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [S x = [E a + b] ;]
+TREE LALR: [S x = [E a + b] ;]
+TREE CLR: [S x = [E a + b] ;]
+Tokens: 7

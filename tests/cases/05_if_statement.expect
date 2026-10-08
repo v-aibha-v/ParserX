@@ -1,0 +1,10 @@
+# Test 5
+# Accepted by all three; reduced by the if rule without else
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [S if ( [C a < b] ) [S x = 1 ;]]
+TREE LALR: [S if ( [C a < b] ) [S x = 1 ;]]
+TREE CLR: [S if ( [C a < b] ) [S x = 1 ;]]
+reduce 5 (S -> if ( C ) S)
+!reduce 6 (

@@ -1,0 +1,8 @@
+# Test 4
+# Accepted by all three; a + b is reduced before the division
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [S w = [T [F ( [F ( [E a + b] )] )] / c] ;]
+TREE LALR: [S w = [T [F ( [F ( [E a + b] )] )] / c] ;]
+TREE CLR: [S w = [T [F ( [F ( [E a + b] )] )] / c] ;]

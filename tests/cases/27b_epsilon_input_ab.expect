@@ -1,0 +1,9 @@
+# Test 27 (edge)
+# Input a b accepted
+re:^TABLE SLR .* sr=0 rr=0$
+re:^TABLE LALR .* sr=0 rr=0$
+re:^TABLE CLR .* sr=0 rr=0$
+Nullable non-terminals: A
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED

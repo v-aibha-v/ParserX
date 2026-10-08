@@ -1,0 +1,8 @@
+# Test 11 (edge)
+# Accepted as spaces are optional
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED
+TREE SLR: [SL [S x = [E a + b] ;] [S y = [T x * 2] ;]]
+TREE LALR: [SL [S x = [E a + b] ;] [S y = [T x * 2] ;]]
+TREE CLR: [SL [S x = [E a + b] ;] [S y = [T x * 2] ;]]

@@ -1,0 +1,5 @@
+# Test 21
+# Rejected at else with no if body
+RESULT SLR REJECTED token=else line=1 col=14 
+RESULT LALR REJECTED token=else line=1 col=14 
+RESULT CLR REJECTED token=else line=1 col=14 

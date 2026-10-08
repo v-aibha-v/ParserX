@@ -1,0 +1,5 @@
+# Test 14 (edge)
+# Rejected at 5; expected id, if or {
+RESULT SLR REJECTED token=num line=1 col=1 step=0 reduces=0 expected=id if {
+RESULT LALR REJECTED token=num line=1 col=1 step=0 reduces=0 expected=id if {
+RESULT CLR REJECTED token=num line=1 col=1 step=0 reduces=0 expected=id if {

@@ -1,0 +1,3 @@
+# Test 27 (edge)
+# Empty grammar file gives an error saying no rules were found
+RESULT GRAMMAR-ERROR grammar file contains no productions

@@ -1,0 +1,5 @@
+# Test 26 (edge)
+# Lines 1 and 2 parse with no error; rejected at ; on line 3 column 9
+RESULT SLR REJECTED token=; line=3 col=9 
+RESULT LALR REJECTED token=; line=3 col=9 
+RESULT CLR REJECTED token=; line=3 col=9 

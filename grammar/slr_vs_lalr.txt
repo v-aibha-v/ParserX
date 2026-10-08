@@ -1,0 +1,5 @@
+# Demo grammar: SLR fails here but LALR/CLR succeed.
+# Classic example:  S -> L = R | R ;  L -> * R | id ;  R -> L
+S -> L = R | R
+L -> * R | id
+R -> L

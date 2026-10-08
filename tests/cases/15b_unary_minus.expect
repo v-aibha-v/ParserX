@@ -1,0 +1,5 @@
+# Test 15
+# Rejected at - with no unary minus rule
+RESULT SLR REJECTED token=- line=1 col=5 
+RESULT LALR REJECTED token=- line=1 col=5 
+RESULT CLR REJECTED token=- line=1 col=5 

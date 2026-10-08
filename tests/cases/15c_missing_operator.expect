@@ -1,0 +1,5 @@
+# Test 15
+# Rejected at b as an operator is missing
+RESULT SLR REJECTED token=id line=1 col=7 
+RESULT LALR REJECTED token=id line=1 col=7 
+RESULT CLR REJECTED token=id line=1 col=7 

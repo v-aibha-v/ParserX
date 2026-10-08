@@ -1,0 +1,13 @@
+# Test 23 Comparison
+# SLR finds a shift reduce conflict on =
+# LALR 10 states, CLR 14 states, no conflict
+# Input accepted by LALR and CLR
+CONFLICT SLR shift/reduce on '='
+TABLE LALR states=10 
+TABLE CLR states=14 
+re:^TABLE LALR .* sr=0 rr=0$
+re:^TABLE CLR .* sr=0 rr=0$
+!CONFLICT LALR
+!CONFLICT CLR
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED

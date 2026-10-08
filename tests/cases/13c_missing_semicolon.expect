@@ -1,0 +1,5 @@
+# Test 13
+# Rejected at end of input with no ;
+RESULT SLR REJECTED token=$ line=2 col=1 
+RESULT LALR REJECTED token=$ line=2 col=1 
+RESULT CLR REJECTED token=$ line=2 col=1 

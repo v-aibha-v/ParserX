@@ -1,0 +1,5 @@
+# Test 16
+# Rejected at the extra )
+RESULT SLR REJECTED token=) line=1 col=11 
+RESULT LALR REJECTED token=) line=1 col=11 
+RESULT CLR REJECTED token=) line=1 col=11 

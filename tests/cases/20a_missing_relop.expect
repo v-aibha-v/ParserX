@@ -1,0 +1,5 @@
+# Test 20
+# Rejected at ) as relop is missing
+RESULT SLR REJECTED token=) line=1 col=8 
+RESULT LALR REJECTED token=) line=1 col=8 
+RESULT CLR REJECTED token=) line=1 col=8 

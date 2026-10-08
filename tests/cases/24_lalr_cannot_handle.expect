@@ -1,0 +1,11 @@
+# Test 24 Comparison
+# Reduce reduce conflict in SLR and LALR; LALR merges two states with one core
+# CLR 14 states with no conflict; only CLR parses the input correctly
+CONFLICT SLR reduce/reduce
+CONFLICT LALR reduce/reduce
+TABLE CLR states=14 
+!CONFLICT CLR
+re:LALR state [0-9]+ is merged CLR states \{ [0-9]+, [0-9]+ \}
+RESULT CLR ACCEPTED
+RESULT SLR REJECTED
+RESULT LALR REJECTED
