@@ -39,7 +39,7 @@ void usage(ostream& os) {
     os << "Usage: parserx [--grammar FILE] [--input FILE | --code TEXT]\n"
           "               [--parser slr|lalr|clr|all] [--trace brief|full|none]\n"
           "               [--tokens] [--states] [--tables] [input-file]\n"
-          "Without --input or --code the program is read from standard input.\n";
+          "Without --input or --code the program is typed in; end it with a line END.\n";
 }
 
 bool parseArgs(int argc, char** argv, Options& o, string& err) {
@@ -163,11 +163,17 @@ int main(int argc, char** argv) {
         }
         sourceName = opt.inputPath;
     } else {
-        cerr << "Enter the program, then press Ctrl+Z and Enter (Windows) "
-                "or Ctrl+D (Linux/macOS):\n";
-        ostringstream ss;
-        ss << cin.rdbuf();
-        source = ss.str();
+        cerr << "Enter the program. Type END on a new line to finish:\n";
+        string line;
+        while (getline(cin, line)) {
+            size_t eof = line.find_first_of("\x1A\x04");
+            if (eof != string::npos) {
+                source += line.substr(0, eof) + "\n";
+                break;
+            }
+            if (utilTrim(line) == "END") break;
+            source += line + "\n";
+        }
         sourceName = "(standard input)";
     }
 
