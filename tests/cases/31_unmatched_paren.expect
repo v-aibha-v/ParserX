@@ -1,0 +1,4 @@
+# Test 31 Unmatched parenthesis in expression
+RESULT SLR REJECTED token=; line=1 col=13 step=19 reduces=9 expected=)
+RESULT LALR REJECTED token=; line=1 col=13 step=19 reduces=9 expected=)
+RESULT CLR REJECTED token=; line=1 col=13 step=10

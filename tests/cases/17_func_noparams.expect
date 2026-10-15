@@ -1,0 +1,4 @@
+# Test 17 Function with empty parameter list
+RESULT SLR ACCEPTED steps=29
+RESULT LALR ACCEPTED steps=29
+RESULT CLR ACCEPTED steps=29

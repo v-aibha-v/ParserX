@@ -1,0 +1,5 @@
+# Test 22a Empty function body { } is allowed
+RESULT SLR ACCEPTED steps=15
+RESULT LALR ACCEPTED steps=15
+RESULT CLR ACCEPTED steps=15
+TREE SLR: [FuncDef int f ( [ParamListOpt] ) [Block { [StmtList] }]]

@@ -1,0 +1,4 @@
+# Test 63 After x = a + at end of input the parsers expect a primary
+RESULT SLR REJECTED token=$ line=2 col=1 step=8 reduces=0 expected=! ( - floatconst id intconst
+RESULT LALR REJECTED token=$ line=2 col=1 step=8 reduces=0 expected=! ( - floatconst id intconst
+RESULT CLR REJECTED token=$ line=2 col=1 step=8 reduces=0 expected=! ( - floatconst id intconst

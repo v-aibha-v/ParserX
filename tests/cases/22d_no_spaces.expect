@@ -1,0 +1,4 @@
+# Test 22d Input without spaces tokenizes correctly
+RESULT SLR ACCEPTED steps=42
+RESULT LALR ACCEPTED steps=42
+RESULT CLR ACCEPTED steps=42

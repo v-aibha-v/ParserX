@@ -1,0 +1,4 @@
+# Test 46 if without parentheses
+RESULT SLR REJECTED token=id line=1 col=4 step=1 reduces=0 expected=(
+RESULT LALR REJECTED token=id line=1 col=4 step=1 reduces=0 expected=(
+RESULT CLR REJECTED token=id line=1 col=4 step=1 reduces=0 expected=(

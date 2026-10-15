@@ -1,0 +1,10 @@
+# Test 21 Full sample program (examples/sample.pgr): functions,
+
+# if/else, while, for, calls, break/continue, float literals
+# All three parsers accept the same program.
+RESULT SLR ACCEPTED steps=856
+RESULT LALR ACCEPTED steps=856
+RESULT CLR ACCEPTED steps=856
+re:^TABLE SLR .* sr=1 rr=0$
+re:^TABLE LALR .* sr=1 rr=0$
+re:^TABLE CLR .* sr=2 rr=0$

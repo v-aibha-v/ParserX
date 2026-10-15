@@ -1,0 +1,4 @@
+# Test 22h Function definitions mixed with top-level statements
+RESULT SLR ACCEPTED steps=356
+RESULT LALR ACCEPTED steps=356
+RESULT CLR ACCEPTED steps=356

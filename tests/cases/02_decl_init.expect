@@ -1,0 +1,4 @@
+# Test 02 Declaration with initializer: float y = 1.5 ;
+RESULT SLR ACCEPTED steps=20
+RESULT LALR ACCEPTED steps=20
+RESULT CLR ACCEPTED steps=20

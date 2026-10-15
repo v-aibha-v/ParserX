@@ -1,0 +1,5 @@
+# Test 22b Empty statement: x = 5 ;;
+RESULT SLR ACCEPTED steps=22
+RESULT LALR ACCEPTED steps=22
+RESULT CLR ACCEPTED steps=22
+TREE SLR: [ItemList [Stmt x = 5 ;] ;]

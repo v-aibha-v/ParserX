@@ -31,7 +31,9 @@ for src in tests/cases/*.src; do
     [ -f "tests/cases/$name.args" ] && args=$(cat "tests/cases/$name.args")
     out="tests/output/$name.out"
     # shellcheck disable=SC2086
-    "$BIN" $args --input "$src" > "$out" 2>&1
+    # Strip CR: on Windows the console layer may translate \n to \r\n,
+    # which would break the re:...$ checks in the expect files.
+    "$BIN" $args --input "$src" 2>&1 | tr -d '\r' > "$out"
     ok=1
     while IFS= read -r check || [ -n "$check" ]; do
         check="${check%$'\r'}"

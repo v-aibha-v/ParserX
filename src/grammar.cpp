@@ -96,7 +96,12 @@ bool Grammar::load(const string& path, string& errorMessage) {
         } else {
             string cur;
             for (size_t k = 0; k < rhs.size(); ++k) {
-                if (rhs[k] == '|') {
+                // '||' is the logical-or terminal (one symbol), not two
+                // alternative separators; a single '|' separates alternatives.
+                if (rhs[k] == '|' && k + 1 < rhs.size() && rhs[k + 1] == '|') {
+                    cur += "||";
+                    ++k;
+                } else if (rhs[k] == '|') {
                     alternatives.push_back(cur);
                     cur.clear();
                 } else {

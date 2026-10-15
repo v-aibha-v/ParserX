@@ -1,0 +1,5 @@
+# Test 12 For loop with all three clause slots empty: for ( ; ; )
+RESULT SLR ACCEPTED steps=27
+RESULT LALR ACCEPTED steps=27
+RESULT CLR ACCEPTED steps=27
+TREE SLR: [Stmt for ( [ForInit] ; [ExprOpt] ; [ForStep] ) [Stmt x = 1 ;]]

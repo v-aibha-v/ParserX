@@ -1,0 +1,6 @@
+# Test 04 Parentheses override precedence: ( a + b ) * c
+RESULT SLR ACCEPTED steps=40
+RESULT LALR ACCEPTED steps=40
+RESULT CLR ACCEPTED steps=40
+TREE SLR: [Stmt x = [Multiplicative [Primary ( [Additive a + b] )] * c] ;]
+TREE CLR: [Stmt x = [Multiplicative [Primary ( [Additive a + b] )] * c] ;]

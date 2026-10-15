@@ -1,0 +1,4 @@
+# Test 34 Invalid operator sequence: x = * 5 ;
+RESULT SLR REJECTED token=* line=1 col=5 step=2
+RESULT LALR REJECTED token=* line=1 col=5 step=2
+RESULT CLR REJECTED token=* line=1 col=5 step=2

@@ -1,3 +1,0 @@
-# Test 18
-# Lexical error on unknown symbol @ reported at line 1 column 7
-RESULT LEXICAL-ERROR symbol='@' line=1 col=7

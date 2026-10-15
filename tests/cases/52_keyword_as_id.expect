@@ -1,0 +1,4 @@
+# Test 52 Keywords cannot be used as identifiers: int if = 5 ;
+RESULT SLR REJECTED token=if line=1 col=5 step=1 reduces=0 expected=id
+RESULT LALR REJECTED token=if line=1 col=5 step=1 reduces=0 expected=id
+RESULT CLR REJECTED token=if line=1 col=5 step=1 reduces=0 expected=id

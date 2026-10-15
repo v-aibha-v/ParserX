@@ -1,0 +1,5 @@
+# Test 15 Function declaration with two int parameters
+RESULT SLR ACCEPTED steps=46
+RESULT LALR ACCEPTED steps=46
+RESULT CLR ACCEPTED steps=46
+TREE SLR: [FuncDef int add ( [ParamList [Param int a] , [Param int b]] )

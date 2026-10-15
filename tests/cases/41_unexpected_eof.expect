@@ -1,0 +1,4 @@
+# Test 41 Unexpected end of input after x =
+RESULT SLR REJECTED token=$ line=2 col=1 step=2 reduces=0 expected=! ( - floatconst id intconst
+RESULT LALR REJECTED token=$ line=2 col=1 step=2 reduces=0 expected=! ( - floatconst id intconst
+RESULT CLR REJECTED token=$ line=2 col=1 step=2 reduces=0 expected=! ( - floatconst id intconst

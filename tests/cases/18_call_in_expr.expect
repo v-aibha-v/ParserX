@@ -1,0 +1,5 @@
+# Test 18 Function call inside an expression
+RESULT SLR ACCEPTED steps=51
+RESULT LALR ACCEPTED steps=51
+RESULT CLR ACCEPTED steps=51
+TREE SLR: [Stmt x = [Multiplicative [Primary add ( [ArgList 1 , 2] )] * 3] ;]

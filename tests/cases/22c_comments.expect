@@ -1,0 +1,4 @@
+# Test 22c Line comments and multi-line block comments are skipped
+RESULT SLR ACCEPTED steps=34
+RESULT LALR ACCEPTED steps=34
+RESULT CLR ACCEPTED steps=34

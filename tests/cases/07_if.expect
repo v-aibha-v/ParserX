@@ -1,0 +1,4 @@
+# Test 07 If statement without else
+RESULT SLR ACCEPTED steps=39
+RESULT LALR ACCEPTED steps=39
+RESULT CLR ACCEPTED steps=39

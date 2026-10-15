@@ -1,0 +1,4 @@
+# Test 43 Chained assignment a = b = c ; is rejected (assignment is a statement)
+RESULT SLR REJECTED token== line=1 col=7 step=3
+RESULT LALR REJECTED token== line=1 col=7 step=3
+RESULT CLR REJECTED token== line=1 col=7 step=3

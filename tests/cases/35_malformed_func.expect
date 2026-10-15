@@ -1,0 +1,4 @@
+# Test 35 Malformed function header: parameter list not closed
+RESULT SLR REJECTED token={ line=1 col=15 step=7 reduces=0 expected=) ,
+RESULT LALR REJECTED token={ line=1 col=15 step=7 reduces=0 expected=) ,
+RESULT CLR REJECTED token={ line=1 col=15 step=7 reduces=0 expected=) ,

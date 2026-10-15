@@ -1,0 +1,3 @@
+// a line comment
+x = 1 ; /* a block
+comment spanning lines */ y = 2 ;

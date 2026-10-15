@@ -1,0 +1,5 @@
+# Test 11 For loop with init, condition, step and block body
+RESULT SLR ACCEPTED steps=86
+RESULT LALR ACCEPTED steps=86
+RESULT CLR ACCEPTED steps=86
+re:TREE SLR: .*\[ForInit i = 0\].*\[Relational i < 10\].*\[ForStep i =

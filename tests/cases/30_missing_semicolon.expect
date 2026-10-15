@@ -1,0 +1,4 @@
+# Test 30 Missing semicolon after initializer: int x = 5
+RESULT SLR REJECTED token=$ line=2 col=1 step=5
+RESULT LALR REJECTED token=$ line=2 col=1 step=5
+RESULT CLR REJECTED token=$ line=2 col=1 step=5

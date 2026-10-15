@@ -1,0 +1,11 @@
+# Original simple grammar of the project, kept for reference and for
+# running the old-style demos. Updated to the current lexer token
+# types: relational operators are their own tokens and integer
+# literals are 'intconst'.
+P  -> SL
+SL -> SL S | S
+S  -> id = E ; | if ( C ) S | if ( C ) S else S | { SL }
+C  -> E < E | E > E | E <= E | E >= E | E == E | E != E
+E  -> E + T | E - T | T
+T  -> T * F | T / F | F
+F  -> ( E ) | id | intconst

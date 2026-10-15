@@ -1,0 +1,4 @@
+# Test 51 Error is reported on the second line, not the first
+RESULT SLR REJECTED token=; line=2 col=9 step=24
+RESULT LALR REJECTED token=; line=2 col=9 step=24
+RESULT CLR REJECTED token=; line=2 col=9 step=24

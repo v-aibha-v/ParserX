@@ -1,0 +1,4 @@
+# Test 36 Missing closing parenthesis in if condition
+RESULT SLR REJECTED token={ line=1 col=12 step=10
+RESULT LALR REJECTED token={ line=1 col=12 step=10
+RESULT CLR REJECTED token={ line=1 col=12 step=10

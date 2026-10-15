@@ -1,0 +1,4 @@
+# Test 47 for header missing a semicolon
+RESULT SLR REJECTED token=id line=1 col=13 step=5
+RESULT LALR REJECTED token=id line=1 col=13 step=5
+RESULT CLR REJECTED token=id line=1 col=13 step=5

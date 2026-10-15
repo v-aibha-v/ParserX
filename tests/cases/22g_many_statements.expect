@@ -1,0 +1,4 @@
+# Test 22g Many statements in one program
+RESULT SLR ACCEPTED steps=157
+RESULT LALR ACCEPTED steps=157
+RESULT CLR ACCEPTED steps=157

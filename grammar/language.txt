@@ -1,11 +1,66 @@
-# Main language grammar of the project (loaded by the parser at runtime).
-# Supports:  A -> B C      one production per line
-#            A -> B | C    several alternatives on one line
-#            A -> eps      epsilon productions
-P  -> SL
-SL -> SL S | S
-S  -> id = E ; | if ( C ) S | if ( C ) S else S | { SL }
-C  -> E relop E
-E  -> E + T | E - T | T
-T  -> T * F | T / F | F
-F  -> ( E ) | id | num
+# =====================================================================
+# ParserX advanced demo language grammar (loaded at runtime).
+#
+# Format:  A -> B C        one production per line
+#          A -> B | C      several alternatives on one line
+#          A -> eps        epsilon (empty) production
+#          # comment       '#' starts a comment
+#
+# A program is a non-empty list of items; an item is a statement or a
+# function definition. Assignment is a STATEMENT (id = Expr ;), not an
+# expression operator, so  a = b = c;  is rejected. Function calls may
+# appear inside expressions AND as expression statements (Stmt -> Expr ;).
+# Blocks { } may be empty; the empty statement ';' is allowed.
+#
+# Dangling else: the grammar keeps both  if ( C ) S  and
+# if ( C ) S else S, so 'else' after a statement creates a shift/reduce
+# conflict in all three parsers. The documented resolution policy is
+# SHIFT: else binds to the nearest if.
+# =====================================================================
+Program -> ItemList
+ItemList -> ItemList Item | Item
+Item -> Stmt | FuncDef
+
+# ---- functions --------------------------------------------------------
+FuncDef -> Type id ( ParamListOpt ) Block
+ParamListOpt -> ParamList | eps
+ParamList -> ParamList , Param | Param
+Param -> Type id
+Type -> int | float
+
+# ---- statements -------------------------------------------------------
+Stmt -> ;
+Stmt -> Type id ;
+Stmt -> Type id = Expr ;
+Stmt -> id = Expr ;
+Stmt -> Expr ;
+Stmt -> if ( Expr ) Stmt
+Stmt -> if ( Expr ) Stmt else Stmt
+Stmt -> while ( Expr ) Stmt
+Stmt -> for ( ForInit ; ExprOpt ; ForStep ) Stmt
+Stmt -> return Expr ;
+Stmt -> break ;
+Stmt -> continue ;
+Stmt -> Block
+Block -> { StmtList }
+StmtList -> StmtList Stmt | eps
+ForInit -> id = Expr | Type id = Expr | eps
+ForStep -> id = Expr | eps
+ExprOpt -> Expr | eps
+
+# ---- expressions: one non-terminal per precedence level ---------------
+# precedence, low to high:
+#   ||   then   &&   then   == !=   then   < > <= >=
+#   then   + -   then   * / %   then   unary - !   then   primary
+Expr -> LogicalOr
+LogicalOr -> LogicalOr || LogicalAnd | LogicalAnd
+LogicalAnd -> LogicalAnd && Equality | Equality
+Equality -> Equality == Relational | Equality != Relational | Relational
+Relational -> Relational < Additive | Relational > Additive | Relational <= Additive | Relational >= Additive | Additive
+Additive -> Additive + Multiplicative | Additive - Multiplicative | Multiplicative
+Multiplicative -> Multiplicative * Unary | Multiplicative / Unary | Multiplicative % Unary | Unary
+Unary -> - Unary | ! Unary | Primary
+Primary -> id | intconst | floatconst | ( Expr ) | id ( ArgListOpt )
+ArgListOpt -> ArgList | eps
+ArgList -> ArgList , Arg | Arg
+Arg -> Expr

@@ -1,0 +1,13 @@
+# Test 61 FIRST and FOLLOW sets computed for the language grammar
+# FIRST starts with the unary/primary tokens, FOLLOW(Stmt) contains
+Nullable non-terminals: ParamListOpt, StmtList, ForInit, ForStep, ExprOpt, ArgListOpt
+FIRST sets (computed by fixed-point iteration):
+FOLLOW sets (computed by fixed-point iteration):
+FIRST(Stmt) = { !, (, -, ;, break, continue, float, floatconst, for, id, if, int, intconst, return, while, { }
+FIRST(Expr) = { !, (, -, floatconst, id, intconst }
+FIRST(Unary) = { !, (, -, floatconst, id, intconst }
+FIRST(Primary) = { (, floatconst, id, intconst }
+FOLLOW(ParamList) = { ), , }
+FOLLOW(Param) = { ), , }
+FOLLOW(Expr) = { ), ,, ; }
+FOLLOW(Stmt) = { !, $, (, -, ;, break, continue, else, float, floatconst, for, id, if, int, intconst, return, while, {, } }

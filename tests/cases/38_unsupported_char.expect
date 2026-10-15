@@ -1,0 +1,4 @@
+# Test 38 Unsupported character @ is a lexical error; parsing is skipped
+RESULT LEXICAL-ERROR symbol='@' line=1 col=7
+Parsing skipped because of lexical errors
+!RESULT SLR

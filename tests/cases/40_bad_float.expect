@@ -1,0 +1,5 @@
+# Test 40 Malformed float 1. (dot not followed by digit) is a lexical error
+# and the parser does not run.
+RESULT LEXICAL-ERROR symbol='.' line=1 col=5
+Parsing skipped because of lexical errors
+!RESULT SLR

@@ -1,0 +1,1 @@
+float avg ( float s , int n ) { return s / n ; }

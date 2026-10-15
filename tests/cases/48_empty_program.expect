@@ -1,0 +1,4 @@
+# Test 48 Empty input is rejected (a program needs at least one item)
+RESULT SLR REJECTED token=$ line=2 col=1 step=0
+RESULT LALR REJECTED token=$ line=2 col=1 step=0
+RESULT CLR REJECTED token=$ line=2 col=1 step=0

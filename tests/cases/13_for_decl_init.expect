@@ -1,0 +1,5 @@
+# Test 13 For loop whose init declares a variable
+RESULT SLR ACCEPTED steps=82
+RESULT LALR ACCEPTED steps=82
+RESULT CLR ACCEPTED steps=82
+re:TREE SLR: .*\[ForInit int i = 0\]

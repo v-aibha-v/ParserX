@@ -1,0 +1,4 @@
+# Test 32 Unmatched opening brace
+RESULT SLR REJECTED token=$ line=2 col=1 step=22
+RESULT LALR REJECTED token=$ line=2 col=1 step=22
+RESULT CLR REJECTED token=$ line=2 col=1 step=21

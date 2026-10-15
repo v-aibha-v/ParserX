@@ -1,0 +1,4 @@
+# Test 10 While loop with block body
+RESULT SLR ACCEPTED steps=51
+RESULT LALR ACCEPTED steps=51
+RESULT CLR ACCEPTED steps=51

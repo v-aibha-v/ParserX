@@ -1,0 +1,5 @@
+# Test 06 Unary minus and logical not
+RESULT SLR ACCEPTED steps=28
+RESULT LALR ACCEPTED steps=28
+RESULT CLR ACCEPTED steps=28
+TREE SLR: [Stmt x = [Additive [Unary - y] + [Unary ! z]] ;]

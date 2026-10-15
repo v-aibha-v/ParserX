@@ -1,0 +1,4 @@
+# Test 45 Two declarations without separator: int x int y ;
+RESULT SLR REJECTED token=int line=1 col=7 step=3 reduces=0 expected=( ; =
+RESULT LALR REJECTED token=int line=1 col=7 step=3 reduces=0 expected=( ; =
+RESULT CLR REJECTED token=int line=1 col=7 step=3 reduces=0 expected=( ; =

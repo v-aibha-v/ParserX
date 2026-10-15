@@ -1,0 +1,5 @@
+# Test 01 Simple declaration: int x ;
+# Accepted by SLR, LALR and CLR
+RESULT SLR ACCEPTED steps=9
+RESULT LALR ACCEPTED steps=9
+RESULT CLR ACCEPTED steps=9

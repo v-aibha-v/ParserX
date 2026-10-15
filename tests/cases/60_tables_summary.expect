@@ -1,0 +1,18 @@
+# Test 60 Language grammar table summary
+# SLR 130 states, LALR 130 states, CLR 359 states
+# The only conflicts are the dangling-else shift/reduce conflicts,
+LALR merged 359 CLR states into 130 states
+TABLE SLR states=130 
+TABLE LALR states=130 
+TABLE CLR states=359 
+re:^TABLE SLR .* sr=1 rr=0$
+re:^TABLE LALR .* sr=1 rr=0$
+re:^TABLE CLR .* sr=2 rr=0$
+CONFLICT SLR shift/reduce on 'else'
+CONFLICT LALR shift/reduce on 'else'
+CONFLICT CLR shift/reduce on 'else'
+re:CONFLICT .*resolved by SHIFT
+!reduce/reduce on
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED

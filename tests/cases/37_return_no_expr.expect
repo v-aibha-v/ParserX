@@ -1,0 +1,4 @@
+# Test 37 return ; is rejected because return requires an expression
+RESULT SLR REJECTED token=; line=1 col=20 step=9 reduces=0 expected=! ( - floatconst id intconst
+RESULT LALR REJECTED token=; line=1 col=20 step=9 reduces=0 expected=! ( - floatconst id intconst
+RESULT CLR REJECTED token=; line=1 col=20 step=9 reduces=0 expected=! ( - floatconst id intconst

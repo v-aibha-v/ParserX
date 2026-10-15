@@ -1,0 +1,9 @@
+# Test 62 Token table: keywords, multi-char operators, literals
+int         int
+floatconst  1.5
+&&          &&
+intconst    2
+>=          >=
+RESULT SLR ACCEPTED
+RESULT LALR ACCEPTED
+RESULT CLR ACCEPTED

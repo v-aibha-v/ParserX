@@ -1,0 +1,4 @@
+# Test 49 Unterminated block comment is a lexical error
+RESULT LEXICAL-ERROR symbol='/' line=1 col=9
+unterminated block comment
+Parsing skipped because of lexical errors

@@ -1,0 +1,4 @@
+# Test 16 Function with mixed float/int parameters
+RESULT SLR ACCEPTED steps=45
+RESULT LALR ACCEPTED steps=45
+RESULT CLR ACCEPTED steps=45

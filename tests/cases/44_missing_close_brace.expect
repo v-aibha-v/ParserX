@@ -1,0 +1,4 @@
+# Test 44 Missing closing brace of while body
+RESULT SLR REJECTED token=$ line=2 col=1 step=29
+RESULT LALR REJECTED token=$ line=2 col=1 step=29
+RESULT CLR REJECTED token=$ line=2 col=1 step=28

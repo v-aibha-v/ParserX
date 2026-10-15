@@ -1,0 +1,7 @@
+# Test 03 Arithmetic precedence: * binds tighter than +
+RESULT SLR ACCEPTED steps=29
+RESULT LALR ACCEPTED steps=29
+RESULT CLR ACCEPTED steps=29
+TREE SLR: [Stmt x = [Additive a + [Multiplicative b * c]] ;]
+TREE LALR: [Stmt x = [Additive a + [Multiplicative b * c]] ;]
+TREE CLR: [Stmt x = [Additive a + [Multiplicative b * c]] ;]

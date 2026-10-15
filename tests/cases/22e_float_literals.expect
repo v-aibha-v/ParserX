@@ -1,0 +1,4 @@
+# Test 22e Floating point literals
+RESULT SLR ACCEPTED steps=24
+RESULT LALR ACCEPTED steps=24
+RESULT CLR ACCEPTED steps=24

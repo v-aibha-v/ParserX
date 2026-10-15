@@ -1,0 +1,56 @@
+// ParserX sample program for the advanced demo language.
+// Exercises: float literals, arithmetic / relational / logical
+// operators, unary operators, if/else, while, for, blocks,
+// function declarations, parameters, calls and return statements.
+
+int calculate(int a, int b) {
+    int result = a + b * 2;
+
+    if (result >= 10 && a != 0) {
+        result = result % b;
+    } else {
+        result = result - 1;
+    }
+
+    while (result > 0) {
+        result = result - 1;
+    }
+
+    return result;
+}
+
+float scale(float x, int n) {
+    float total = 0.0;
+
+    for (int i = 0; i < n; i = i + 1) {
+        total = total + x * 1.5;
+    }
+
+    if (n == 0 || !(total >= 0.0)) {
+        return 0.0;
+    } else {
+        return total / n;
+    }
+}
+
+/* Top-level statements may mix with function definitions. */
+int sum = calculate(3, 4);
+float avg = scale(2.5, 10);
+if (avg > 0.0 && sum < 100) {
+    sum = sum + 1;
+} else {
+    sum = 0;
+}
+while (sum > 0) {
+    sum = sum - 1;
+    if (sum == 5) continue;
+    if (sum == 2) break;
+}
+for (int k = 0; k < 10; k = k + 1) {
+    avg = avg * 1.1;
+}
+{
+    int inner = avg;
+    { int deepest = inner + 1; }
+}
+;

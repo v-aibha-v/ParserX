@@ -1,0 +1,4 @@
+# Test 08 If-else statement
+RESULT SLR ACCEPTED steps=54
+RESULT LALR ACCEPTED steps=54
+RESULT CLR ACCEPTED steps=54

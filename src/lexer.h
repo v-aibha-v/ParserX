@@ -16,6 +16,7 @@ struct LexError {
     int line = 0;
     int column = 0;
     char character = 0;
+    std::string message;  // empty means "unknown character"
 };
 
 struct LexResult {

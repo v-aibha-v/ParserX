@@ -1,0 +1,5 @@
+# Test 05 Relational and logical operators with correct layering
+RESULT SLR ACCEPTED steps=53
+RESULT LALR ACCEPTED steps=53
+RESULT CLR ACCEPTED steps=53
+TREE SLR: [Stmt x = [LogicalOr [LogicalAnd [Relational a < b] && [Relational c >= d]] || [Unary ! e]] ;]

@@ -1,0 +1,4 @@
+# Test 19 Expression statement that is a call: add ( x , y ) ;
+RESULT SLR ACCEPTED steps=44
+RESULT LALR ACCEPTED steps=44
+RESULT CLR ACCEPTED steps=44
