@@ -1,0 +1,20 @@
+// ParseX example 02: conditional statements and logical expressions.
+// Tests: if, if-else, relational operators, == !=, && ||, !,
+// and nested conditionals.
+int a = 5;
+int b = 10;
+if (a < b) {
+    a = a + 1;
+}
+if (a == b && a != 0) {
+    b = b - 1;
+} else {
+    b = b + 1;
+}
+if (a > 0 || !(b <= 0)) {
+    if (a >= b) {
+        a = 0;
+    } else {
+        a = 1;
+    }
+}

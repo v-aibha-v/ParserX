@@ -73,8 +73,9 @@ alternatives. Other grammar files:
 | `grammar/epsilon.txt`, `tests/grammars/epsilon_ab.txt` | Epsilon FIRST/FOLLOW demos |
 | `tests/grammars/no_arrow.txt`, `tests/grammars/empty.txt` | Grammar-loader error demos |
 
-Sample programs: `examples/sample.pgr` (valid, exercises every feature)
-and `examples/invalid.pgr` (several lexical errors).
+Sample programs: the five `examples/0*.pgr` demo files (see *Example
+programs* below), plus the legacy `examples/sample.pgr` (valid, exercises
+every feature) and `examples/invalid.pgr` (several lexical errors).
 ## Source files
 
 | File | What it does |
@@ -226,8 +227,98 @@ parserx                                    # type program, end with line END
 parserx --grammar grammar/slr_vs_lalr.txt --code "* id = id"
 ```
 
-Useful flags: `--parser slr|lalr|clr|all` (whose trace to show),
-`--trace brief|full|none`, `--tokens`, `--states`, `--tables`.
+Useful flags: `--parser slr|lalr|clr|all` (which parsers to run),
+`--trace brief|full|none` (detailed parse steps, off by default),
+`--tokens` (token table), `--tree` (full tree-like parse structure),
+`--states`/`--tables` (item sets and ACTION/GOTO tables), `--verbose`
+(grammar dump, FIRST/FOLLOW sets and full syntax-error reports).
+
+## Example programs
+
+Five short demo files live in `examples/`:
+
+| File | Purpose | Expected result |
+|------|---------|-----------------|
+| `01_arithmetic.pgr` | `int`/`float` declarations, `+ - * / %`, parentheses, unary `-`, precedence (`b * 2` inside an addition) | ACCEPTED |
+| `02_conditions.pgr` | `if`, `if-else`, `< == != >= <=`, `&&`, `\|\|`, `!`, nested conditionals | ACCEPTED |
+| `03_loops.pgr` | `while`, `for` (init/condition/step), nested `if`, `break`, `continue` | ACCEPTED |
+| `04_functions.pgr` | `int`/`float` function definitions, parameters, calls in expressions and as statements, `return`, locals | ACCEPTED |
+| `05_invalid_syntax.pgr` | Missing `;` after an initializer (a genuine syntax error) | REJECTED with line/column |
+
+Build, then run each example on Windows PowerShell:
+
+```
+g++ -std=c++17 -O2 -Wall -Wextra -Isrc parserx.cpp src/grammar.cpp src/lexer.cpp src/first_follow.cpp src/slr.cpp src/clr.cpp src/lalr.cpp src/table.cpp src/parser.cpp src/comparison.cpp -o parserx.exe
+.\parserx.exe --input examples\01_arithmetic.pgr
+.\parserx.exe --input examples\02_conditions.pgr
+.\parserx.exe --input examples\03_loops.pgr
+.\parserx.exe --input examples\04_functions.pgr
+.\parserx.exe --input examples\05_invalid_syntax.pgr
+```
+
+(`make` also builds `parserx`; `make test` runs the full suite.)
+
+## Command-line output
+
+The default output is a concise faculty-demo summary:
+
+```
+========================================================
+                       PARSEX
+             SLR(1) | CLR(1) | LALR(1)
+========================================================
+
+Input File : examples/01_arithmetic.pgr
+Grammar    : grammar/language.txt
+
+PARSING RESULTS
+--------------------------------------------------------
+Parser       Result       States       Steps
+--------------------------------------------------------
+SLR(1)       ACCEPTED     ...
+LALR(1)      ACCEPTED     ...
+CLR(1)       ACCEPTED     ...
+--------------------------------------------------------
+
+PARSER COMPARISON
+--------------------------------------------------------
+Parser       ACTION Entries   GOTO Entries   Conflicts
+--------------------------------------------------------
+SLR(1)       ...              ...             ...
+LALR(1)      ...              ...             ...
+CLR(1)       ...              ...             ...
+--------------------------------------------------------
+
+OVERALL RESULT: ALL PARSERS ACCEPTED THE INPUT
+```
+
+State counts, step counts, ACTION/GOTO entry counts, conflict counts and
+the ACCEPTED/REJECTED verdicts all come from the real parser tables and
+parse runs — nothing is hardcoded. Conflict details (state, symbol,
+competing actions, SHIFT resolution) follow the comparison table. The
+final line is one of: all accepted, all rejected, parsers disagreed, or
+execution failed before parsing. Rejected inputs also show the first
+error with line/column and the expected tokens. Optional detail flags:
+
+```
+.\parserx.exe --input examples\01_arithmetic.pgr --tree     # full tree-like parse structure
+.\parserx.exe --input examples\01_arithmetic.pgr --tokens   # token stream
+.\parserx.exe --input examples\01_arithmetic.pgr --trace brief   # detailed parse steps
+.\parserx.exe --input examples\01_arithmetic.pgr --tables   # ACTION/GOTO statistics/tables
+.\parserx.exe --input examples\01_arithmetic.pgr --parser all    # run SLR + LALR + CLR
+```
+
+The "parse structure" text is a compact bracket rendering rebuilt from
+the recorded shift/reduce steps (it is not a separately constructed
+AST). Machine-readable `TABLE`/`CONFLICT`/`RESULT`/`TREE` lines are also
+printed for scripts and the test suite; very long default `TREE` lines
+are truncated (use `--tree` for the full text).
+
+The invalid example is expected to fail: `05_invalid_syntax.pgr` is
+REJECTED by all three parsers with a syntax error (line/column
+included) and a nonzero exit status. Rejection is the correct outcome,
+not a test failure.
+
 ## Demo output
 
 `parser` (fixed demo of `src/main.cpp`, abbreviated):

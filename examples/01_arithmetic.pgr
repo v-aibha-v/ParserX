@@ -1,0 +1,9 @@
+// ParseX example 01: arithmetic expressions and operator precedence.
+// Tests: int/float declarations, + - * / %, parentheses, unary minus,
+// and precedence (a + b * c parses with * binding tighter than +).
+int a = 3;
+float b = 1.5;
+int c = a + b * 2 - 4 / 2;
+c = (a + b) * 3 % 5;
+int d = -a + (c - 2) * 4;
+c = d / 2 + b - 1.25;

@@ -1,0 +1,7 @@
+// ParseX example 05: intentionally invalid syntax (missing semicolon).
+// The assignment below needs a ';' before the closing brace, so every
+// parser must REJECT this file with a syntax error at line 2.
+int check(int value) {
+    int result = value + 1
+    return result;
+}

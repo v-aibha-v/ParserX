@@ -21,7 +21,6 @@ using namespace std;
 namespace {
 
 const size_t kMaxTracedTokens = 2000;
-const size_t kMaxPrintedTokens = 200;
 
 struct Options {
     string grammarPath = "grammar/language.txt";
@@ -29,17 +28,24 @@ struct Options {
     string code;
     bool haveCode = false;
     string parser = "all";
-    string trace = "brief";
+    string trace = "none";
     bool tokens = false;
+    bool tree = false;
     bool states = false;
     bool tables = false;
+    bool verbose = false;
 };
 
 void usage(ostream& os) {
     os << "Usage: parserx [--grammar FILE] [--input FILE | --code TEXT]\n"
           "               [--parser slr|lalr|clr|all] [--trace brief|full|none]\n"
-          "               [--tokens] [--states] [--tables] [input-file]\n"
-          "Without --input or --code the program is typed in; end it with a line END.\n";
+          "               [--tokens] [--tree] [--states] [--tables] [--verbose]\n"
+          "               [input-file]\n"
+          "Without --input or --code the program is typed in; end it with a line END.\n"
+          "Default output is a concise summary. Use --tree for the parse\n"
+          "structure, --tokens for the token table, --trace for parse steps,\n"
+          "--states/--tables for item sets and ACTION/GOTO tables, and\n"
+          "--verbose for grammar plus FIRST/FOLLOW details.\n";
 }
 
 bool parseArgs(int argc, char** argv, Options& o, string& err) {
@@ -71,10 +77,14 @@ bool parseArgs(int argc, char** argv, Options& o, string& err) {
             }
         } else if (a == "--tokens") {
             o.tokens = true;
+        } else if (a == "--tree") {
+            o.tree = true;
         } else if (a == "--states") {
             o.states = true;
         } else if (a == "--tables") {
             o.tables = true;
+        } else if (a == "--verbose" || a == "--detail" || a == "--details") {
+            o.verbose = true;
         } else if (!a.empty() && a[0] != '-' && o.inputPath.empty()) {
             o.inputPath = a;
         } else {
@@ -83,11 +93,6 @@ bool parseArgs(int argc, char** argv, Options& o, string& err) {
         }
     }
     return true;
-}
-
-void step(const string& title) {
-    cout << "\n" << utilRepeat('=', 70) << "\n" << title << "\n"
-         << utilRepeat('=', 70) << "\n";
 }
 
 int retypeForGrammar(vector<Token>& tokens, const Grammar& g) {
@@ -177,20 +182,21 @@ int main(int argc, char** argv) {
         sourceName = "(standard input)";
     }
 
-    utilBanner(cout, "PARSERX - SLR / LALR / CLR PARSER");
-    cout << "Grammar file : " << opt.grammarPath << "\n";
-    cout << "Input        : " << sourceName << " (" << source.size() << " bytes)\n";
+    cout << "========================================================\n"
+         << "                       PARSEX\n"
+         << "             SLR(1) | CLR(1) | LALR(1)\n"
+         << "========================================================\n\n";
+    cout << "Input File : " << sourceName << "\n";
+    cout << "Grammar    : " << opt.grammarPath << "\n\n";
 
-    // Step 1: Lexer
-    step("STEP 1  LEXER");
+    // Lexer (concise by default; full token table only with --tokens).
     LexResult lex = Lexer::tokenize(source);
     cout << "Tokens: " << lex.tokens.size() << " (including the end marker $)\n";
-    if (opt.tokens || lex.tokens.size() <= kMaxPrintedTokens) printTokens(cout, lex);
-    else cout << "(token table not printed for large input; use --tokens)\n";
+    if (opt.tokens) printTokens(cout, lex);
     if (!lex.errors.empty()) {
-        if (!opt.tokens && lex.tokens.size() > kMaxPrintedTokens) printLexErrors(cout, lex);
+        if (!opt.tokens) printLexErrors(cout, lex);
         cout << "\nParsing skipped because of lexical errors.\n";
-        cout << "\n" << utilRepeat('-', 70) << "\n";
+        cout << "\n" << utilRepeat('-', 56) << "\n";
         for (size_t k = 0; k < lex.errors.size(); ++k) {
             cout << "RESULT LEXICAL-ERROR symbol='" << lex.errors[k].character
                  << "' line=" << lex.errors[k].line
@@ -199,48 +205,40 @@ int main(int argc, char** argv) {
         return 3;
     }
 
-    // Step 2: Grammar
-    step("STEP 2  GRAMMAR LOADER");
+    // Grammar loader.
     Grammar g;
     if (!g.load(opt.grammarPath, err)) {
         cout << "Grammar error: " << err << "\n";
-        cout << "\n" << utilRepeat('-', 70) << "\n";
+        cout << "\n" << utilRepeat('-', 56) << "\n";
         cout << "RESULT GRAMMAR-ERROR " << err << "\n";
         return 2;
     }
-    g.print(cout);
+    if (opt.verbose) g.print(cout);
     int retyped = retypeForGrammar(lex.tokens, g);
-    if (retyped > 0) {
+    if (retyped > 0 && opt.verbose) {
         cout << "Note: " << retyped << " token(s) retyped to this grammar's terminals: ";
         vector<string> types;
         for (size_t k = 0; k < lex.tokens.size(); ++k) types.push_back(lex.tokens[k].type);
         cout << utilJoin(types, " ") << "\n";
     }
 
-    // Steps 3-4: FIRST/FOLLOW
+    // FIRST/FOLLOW: one summary line always (needed for epsilon tests);
+    // full sets only with --verbose.
     FirstFollow ff(g);
-    step("STEP 3  FIRST SETS");
     vector<string> nullables;
     for (size_t k = 0; k < g.nonterminals().size(); ++k)
         if (ff.nullable(g.nonterminals()[k])) nullables.push_back(g.nonterminals()[k]);
     cout << "Nullable non-terminals: "
          << (nullables.empty() ? "none" : utilJoin(nullables, ", ")) << "\n";
-    ff.printFirst(cout);
-    step("STEP 4  FOLLOW SETS");
-    ff.printFollow(cout);
+    if (opt.verbose) {
+        ff.printFirst(cout);
+        ff.printFollow(cout);
+    }
 
-    // Steps 5-7: Tables
-    step("STEPS 5-7  SLR (LR(0)), CLR (LR(1)) AND LALR (merged CLR) TABLES");
+    // Parser tables (built algorithmically from the grammar).
     BuiltTables bt = buildAllTables(g, ff);
     const ParsingTable* tables[3] = {&bt.slr, &bt.lalr, &bt.clr};
     const LRMachine* machines[3] = {&bt.slrMachine, &bt.lalrMachine, &bt.clrMachine};
-    const long buildUs[3] = {bt.slrMicroseconds, bt.lalrMicroseconds, bt.clrMicroseconds};
-    for (int k = 0; k < 3; ++k) {
-        cout << left << setw(5) << tables[k]->name << ": "
-             << setw(4) << tables[k]->stateItems.size() << " states, "
-             << tables[k]->actionEntries() << " ACTION + " << tables[k]->gotoEntries()
-             << " GOTO entries, built in " << buildUs[k] << " us\n";
-    }
     int mergedGroups = 0;
     for (size_t s = 0; s < bt.lalrMachine.states.size(); ++s)
         if (bt.lalrMachine.states[s].note.compare(0, 6, "merged") == 0) ++mergedGroups;
@@ -260,45 +258,61 @@ int main(int argc, char** argv) {
             printGotoTable(cout, g, *tables[k], false);
         }
     }
-    if (!opt.states && !opt.tables)
-        cout << "(use --states to print item sets and --tables for ACTION/GOTO)\n";
-
-    // Step 8: Conflicts
-    step("STEP 8  CONFLICT CHECK");
-    for (int k = 0; k < 3; ++k) {
-        printConflicts(cout, *tables[k]);
-        if (tables[k]->kind == MachineKind::LALR) {
-            for (size_t c = 0; c < tables[k]->conflicts.size(); ++c) {
-                int st = tables[k]->conflicts[c].state;
-                cout << "      LALR state " << st << " is "
-                     << tables[k]->stateNotes[(size_t)st] << "\n";
+    if (opt.verbose) {
+        cout << "\nConflicts (detected during table construction):\n";
+        for (int k = 0; k < 3; ++k) {
+            printConflicts(cout, *tables[k]);
+            if (tables[k]->kind == MachineKind::LALR) {
+                for (size_t c = 0; c < tables[k]->conflicts.size(); ++c) {
+                    int st = tables[k]->conflicts[c].state;
+                    cout << "      LALR state " << st << " is "
+                         << tables[k]->stateNotes[(size_t)st] << "\n";
+                }
+            }
+        }
+    } else {
+        for (int k = 0; k < 3; ++k) {
+            if (tables[k]->kind == MachineKind::LALR) {
+                for (size_t c = 0; c < tables[k]->conflicts.size(); ++c) {
+                    int st = tables[k]->conflicts[c].state;
+                    cout << "      LALR state " << st << " is "
+                         << tables[k]->stateNotes[(size_t)st] << "\n";
+                }
             }
         }
     }
 
-    // Steps 9-10: Parse
-    bool record = opt.trace != "none" && lex.tokens.size() <= kMaxTracedTokens;
-    bool allAccepted = true;
-    vector<string> treeLines;
+    // Parse every selected parser. Traces are opt-in (--trace). The
+    // tree-like parse structure text is always recorded for the
+    // machine-readable TREE line; --tree additionally prints the full
+    // readable copy, and long default TREE lines are truncated.
+    const bool wantTrace = opt.trace != "none";
+    const size_t tooBig =
+        lex.tokens.size() > kMaxTracedTokens ? lex.tokens.size() : 0;
+    vector<ParseResult> results(3);
+    vector<bool> ran(3, false);
     for (int k = 0; k < 3; ++k) {
         if (!selected(opt, tables[k]->name)) continue;
-        step("STEPS 9-10  PARSE WITH " + tables[k]->name);
         Parser p(g, *tables[k]);
-        ParseResult r = p.parse(lex.tokens, record);
-        if (record) printTrace(cout, g, r, opt.trace == "full");
-        else if (opt.trace != "none")
-            cout << "(trace not recorded: input has more than " << kMaxTracedTokens
-            << " tokens)\n";
-        if (r.accepted) {
-            cout << "\n" << tables[k]->name << ": ACCEPTED in " << r.stepCount
-                 << " steps\n";
-            if (record) {
-                string tree = compactTree(g, lex.tokens, r);
-                cout << "Structure: " << tree << "\n";
-                treeLines.push_back("TREE " + tables[k]->name + ": " + tree);
-            }
-        } else {
-            allAccepted = false;
+        ParseResult r = p.parse(lex.tokens,
+                                lex.tokens.size() <= kMaxTracedTokens);
+        results[(size_t)k] = r;
+        ran[(size_t)k] = true;
+        if (wantTrace) {
+            cout << "\n--- " << tables[k]->name << " parse trace ---\n";
+            if (r.steps.empty() && tooBig > 0)
+                cout << "(trace not recorded: input has " << tooBig
+                     << " tokens, limit is " << kMaxTracedTokens << ")\n";
+            else
+                printTrace(cout, g, r, opt.trace == "full");
+        }
+        if (opt.tree && r.accepted && !r.steps.empty()) {
+            string tree = compactTree(g, lex.tokens, r);
+            cout << "\n" << tables[k]->name
+                 << " parse structure (tree-like, not a full AST):\n"
+                 << tree << "\n";
+        }
+        if (!r.accepted && opt.verbose) {
             cout << "\n" << tables[k]->name << ": REJECTED at step " << r.errorStep
                  << " on " << tokenDesc(r.error.unexpectedType, r.error.unexpectedLexeme)
                  << " after " << r.reductionsBeforeError
@@ -307,13 +321,87 @@ int main(int argc, char** argv) {
         }
     }
 
-    // Step 11: Comparison
-    step("STEP 11  COMPARISON OF SLR, LALR AND CLR ON THIS INPUT");
+    // Concise professional summary.
     ComparisonResult cmp = compareParsers(g, lex.tokens, bt);
-    printComparison(cout, cmp);
+    cout << "\nPARSING RESULTS\n";
+    cout << utilRepeat('-', 56) << "\n";
+    cout << left << setw(10) << "Parser" << setw(12) << "Result"
+         << setw(10) << "States" << "Steps\n";
+    cout << utilRepeat('-', 56) << "\n";
+    for (size_t k = 0; k < cmp.parsers.size(); ++k) {
+        const ParserReport& pr = cmp.parsers[k];
+        if (!selected(opt, pr.name)) continue;
+        cout << left << setw(10) << pr.name
+             << setw(12) << (pr.accepted ? "ACCEPTED" : "REJECTED")
+             << setw(10) << pr.states << pr.steps << "\n";
+    }
+    cout << utilRepeat('-', 56) << "\n";
 
-    // Summary lines
-    cout << "\n" << utilRepeat('-', 70) << "\n";
+    cout << "\nPARSER COMPARISON\n";
+    cout << utilRepeat('-', 56) << "\n";
+    cout << left << setw(10) << "Parser" << setw(15) << "ACTION Entries"
+         << setw(13) << "GOTO Entries" << "Conflicts\n";
+    cout << utilRepeat('-', 56) << "\n";
+    for (int k = 0; k < 3; ++k) {
+        if (!selected(opt, tables[k]->name)) continue;
+        cout << left << setw(10) << tables[k]->name
+             << setw(15) << tables[k]->actionEntries()
+             << setw(13) << tables[k]->gotoEntries()
+             << (tables[k]->srConflicts() + tables[k]->rrConflicts()) << "\n";
+    }
+    cout << utilRepeat('-', 56) << "\n";
+    bool anyConflict = false;
+    for (int k = 0; k < 3; ++k) {
+        if (!selected(opt, tables[k]->name)) continue;
+        for (size_t c = 0; c < tables[k]->conflicts.size(); ++c) {
+            const Conflict& cf = tables[k]->conflicts[c];
+            if (!anyConflict) {
+                cout << "Conflict details (resolved by documented SHIFT policy):\n";
+                anyConflict = true;
+            }
+            cout << "  " << tables[k]->name << " state " << cf.state << " on '"
+                 << cf.symbol << "' (" << cf.kind << "): " << cf.existing
+                 << " vs " << cf.incoming << "\n";
+        }
+    }
+
+    // Overall verdict.
+    int accepted = 0, rejected = 0;
+    for (int k = 0; k < 3; ++k) {
+        if (!ran[(size_t)k]) continue;
+        if (results[(size_t)k].accepted) ++accepted;
+        else ++rejected;
+    }
+    cout << "\n";
+    if (accepted > 0 && rejected == 0)
+        cout << "OVERALL RESULT: ALL PARSERS ACCEPTED THE INPUT\n";
+    else if (rejected > 0 && accepted == 0)
+        cout << "OVERALL RESULT: ALL PARSERS REJECTED THE INPUT\n";
+    else if (accepted > 0 && rejected > 0)
+        cout << "OVERALL RESULT: PARSERS DISAGREED (" << accepted
+             << " accepted, " << rejected << " rejected)\n";
+    else
+        cout << "OVERALL RESULT: NO PARSER RAN\n";
+    if (rejected > 0) {
+        cout << "\nFirst error (with line/column where available):\n";
+        for (int k = 0; k < 3; ++k) {
+            if (!ran[(size_t)k] || results[(size_t)k].accepted) continue;
+            const ParseError& e = results[(size_t)k].error;
+            cout << "  " << tables[k]->name << ": line " << e.line << ", column "
+                 << e.column << " on ";
+            if (e.unexpectedType == "$") cout << "end of input ($)";
+            else cout << "'" << e.unexpectedLexeme << "' (token " << e.unexpectedType << ")";
+            if (!e.expected.empty())
+                cout << "; expected one of: " << utilJoin(e.expected, ", ");
+            cout << "\n";
+            break;
+        }
+    }
+
+    // Machine-readable summary lines (kept for scripts and the test suite).
+    // TREE lines are the compact one-line parse structure; very long trees
+    // are truncated in the default output so a faculty demo is not flooded.
+    const size_t kMaxTreeChars = 4000;
     for (int k = 0; k < 3; ++k) {
         cout << "TABLE " << tables[k]->name
              << " states=" << tables[k]->stateItems.size()
@@ -332,6 +420,7 @@ int main(int argc, char** argv) {
     }
     for (size_t k = 0; k < cmp.parsers.size(); ++k) {
         const ParserReport& pr = cmp.parsers[k];
+        if (!selected(opt, pr.name)) continue;
         cout << "RESULT " << pr.name << " ";
         if (pr.accepted) {
             cout << "ACCEPTED steps=" << pr.steps << "\n";
@@ -342,6 +431,14 @@ int main(int argc, char** argv) {
                  << " expected=" << utilJoin(pr.expected, " ") << "\n";
         }
     }
-    for (size_t k = 0; k < treeLines.size(); ++k) cout << treeLines[k] << "\n";
+    for (int k = 0; k < 3; ++k) {
+        if (!ran[(size_t)k] || !results[(size_t)k].accepted) continue;
+        if (results[(size_t)k].steps.empty()) continue;
+        string tree = compactTree(g, lex.tokens, results[(size_t)k]);
+        if (!opt.tree && tree.size() > kMaxTreeChars)
+            tree = tree.substr(0, kMaxTreeChars) + " ... (truncated; use --tree)";
+        cout << "TREE " << tables[k]->name << ": " << tree << "\n";
+    }
+    bool allAccepted = (rejected == 0 && accepted > 0);
     return allAccepted ? 0 : 1;
 }

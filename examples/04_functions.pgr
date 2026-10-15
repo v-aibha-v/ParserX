@@ -1,0 +1,17 @@
+// ParseX example 04: function-related syntax.
+// Tests: function definitions, int/float parameters, return values,
+// local variables, calls in expressions and as statements.
+int add(int a, int b) {
+    int total = a + b;
+    return total;
+}
+float scale(float x, int n) {
+    float total = x * n + 1.5;
+    if (n == 0) {
+        return 0.0;
+    }
+    return total / n;
+}
+int sum = add(3, 4);
+float avg = scale(2.5, 2);
+add(sum, 1);

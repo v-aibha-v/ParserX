@@ -1,0 +1,21 @@
+// ParseX example 03: loop constructs.
+// Tests: while, for (init/condition/step), loop bodies,
+// nested conditionals, and break / continue.
+int sum = 0;
+int i = 0;
+while (i < 10) {
+    sum = sum + i;
+    i = i + 1;
+}
+for (i = 0; i < 5; i = i + 1) {
+    if (i == 2) {
+        continue;
+    }
+    if (i == 4) {
+        break;
+    }
+    sum = sum + i;
+}
+for (int k = 0; k < 3; k = k + 1) {
+    sum = sum + k;
+}
